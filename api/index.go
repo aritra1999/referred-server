@@ -1,13 +1,22 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-func Handler() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	"github.com/gin-gonic/gin"
+)
+
+func Handler(w http.ResponseWriter, r *http.Request) {
+	// Creating new gin engine
+	g := gin.New()
+	// Your handler logic
+	g.GET("/api/users", func(c *gin.Context) {
+		// ... your handler logic here ...
 		c.JSON(200, gin.H{
-			"message": "pong",
+			"message": "Hello from /api/users",
 		})
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+
+	// running gin engine
+	g.ServeHTTP(w, r)
 }
